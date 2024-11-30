@@ -49,8 +49,12 @@ struct Node{
             return this;
         }
         if(d < data){
+            if(lch == nullptr)
+                throw 1;
             return lch->findNode(d);
         }
+        if(rch == nullptr)
+            throw 1;
         return rch->findNode(d);
     }
 
@@ -93,7 +97,14 @@ int main() {
         fin >> a;
         binTree.addNode(a);
     }
-    Node* node = binTree.findNode(d);
+    Node* node;
+    try 
+    {
+        node = binTree.findNode(d);
+    } catch(int err){
+        binTree.leftPreOrderTraversal(fout);
+        return 0;
+    };
     binTree.deleteNodeRight(node);
     binTree.leftPreOrderTraversal(fout);
 }
